@@ -150,13 +150,23 @@ srv.listen(0, async () => {
     await p.click('.tabs button[data-view="oneshot"]');
     await p.waitForSelector('#os-root .os-table');
     const os = await p.evaluate(() => ({ missions: document.querySelectorAll('#os-list li').length, tables: document.querySelectorAll('#os-root .os-table').length, rows: document.querySelectorAll('#os-root .os-table tbody tr').length, map: !!document.querySelector('#os-root svg.os-map'), priv: !!window.RW_ONESHOT_TEXT }));
-    if (os.missions !== 4 || os.tables !== 2 || os.rows !== 8 || os.map !== os.priv) throw new Error('One Shot view wrong: ' + JSON.stringify(os));
-    // Code Three fan Missions show in full in every build, map included
-    for (const n of [2, 3]) {
-      await p.click('#os-list li >> nth=' + n);
-      const f = await p.evaluate(() => ({ tables: document.querySelectorAll('#os-root .os-table').length, map: !!document.querySelector('#os-root svg.os-map'), brief: document.querySelectorAll('#os-root .os-cols p').length, budgets: [...document.querySelectorAll('#os-root .os-team .hint')].map((x) => x.textContent).join(' ') }));
-      if (f.tables !== 2 || !f.map || f.brief < 3 || /over the Core budget/.test(f.budgets)) throw new Error('Code Three Mission view wrong: ' + JSON.stringify(f));
+    if (os.missions !== 2 || os.tables !== 2 || os.rows !== 8 || os.map !== os.priv) throw new Error('One Shot view wrong: ' + JSON.stringify(os));
+    // Fan Missions: index with filters, and each Mission shows in full in every build, map included, teams legal
+    await p.click('.tabs button[data-view="fan"]');
+    await p.waitForSelector('#fan-grid .fan-card');
+    const fanN = await p.evaluate(() => document.querySelectorAll('#fan-grid .fan-card').length);
+    if (fanN < 3) throw new Error('Fan Missions index should list at least 3, got ' + fanN);
+    await p.selectOption('.fan-filters select[data-key="genre"]', 'Spy thriller');
+    const fanF = await p.evaluate(() => document.querySelectorAll('#fan-grid .fan-card').length);
+    if (fanF !== 1) throw new Error('Fan Missions genre filter should leave 1, got ' + fanF);
+    await p.click('.fan-clear');
+    for (let n = 0; n < fanN; n++) {
+      await p.click('#fan-grid .fan-card >> nth=' + n + ' >> button:has-text("Open mission")');
+      const f = await p.evaluate(() => ({ tables: document.querySelectorAll('#fan-root .os-table').length, map: !!document.querySelector('#fan-root svg.os-map'), brief: document.querySelectorAll('#fan-root .os-cols p').length, budgets: [...document.querySelectorAll('#fan-root .os-team .hint, #fan-root .os-team .warn')].map((x) => x.textContent).join(' ') }));
+      if (f.tables !== 2 || !f.map || f.brief < 3 || /over the Core budget|over budget|illegal/i.test(f.budgets)) throw new Error('Fan Mission view wrong: ' + JSON.stringify(f));
+      await p.click('#fan-root button:has-text("All Fan Missions")');
     }
+    await p.click('.tabs button[data-view="oneshot"]');
     await p.click('#os-list li >> nth=0');
     await save(() => p.click('#os-root button:has-text("Print cards")'), 'oneshot-team-cards.pdf');
     await p.click('.tabs button[data-view="about"]');

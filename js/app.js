@@ -556,6 +556,13 @@
       else if (k === 'objective') {
         g.append(sv('circle', { cx: sh.cx, cy: sh.cy, r: 1.35, class: 'os-k-objective', filter: `url(#${id}-s)` }), sv('text', { x: sh.cx, y: R(sh.cy + .55), 'text-anchor': 'middle', class: 'os-obj-n' }, String(sh.n == null ? '' : sh.n).slice(0, 2)));
       } else if (k === 'terrain') g.append(sv('rect', { x: sh.x, y: sh.y, width: sh.w, height: sh.h, rx: Math.min(1.6, sh.w / 3, sh.h / 3), class: 'os-k-terrain' }));
+      else if (k === 'vehicle') {
+        const bw = sh.w, bh = sh.h, x0 = R(sh.cx - bw / 2), y0 = R(sh.cy - bh / 2);
+        g.append(sv('g', { transform: `rotate(${sh.rot || 0} ${sh.cx} ${sh.cy})` },
+          sv('rect', { x: x0, y: y0, width: bw, height: bh, rx: R(Math.min(bw, bh) * .28), class: 'os-k-vehicle', filter: `url(#${id}-s)` }),
+          sv('rect', { x: R(x0 + bw * .14), y: R(y0 + bh * .2), width: R(bw * .72), height: R(bh * .16), rx: .3, class: 'os-glass' }),
+          sv('rect', { x: R(x0 + bw * .14), y: R(y0 + bh * .7), width: R(bw * .72), height: R(bh * .1), rx: .3, class: 'os-glass' })));
+      }
       else if (k === 'wall') g.append(sv('rect', { x: sh.x, y: sh.y, width: sh.w, height: sh.h, rx: .15, class: 'os-k-wall', filter: `url(#${id}-s)` }));
       else g.append(sv('rect', { x: sh.x, y: sh.y, width: sh.w, height: sh.h, class: 'os-k-' + k }));
       }
@@ -592,20 +599,25 @@
     return c;
   }
 
+  // Official One Shot Missions only; fan-made Missions have their own page (js/fan.js), which uses missionDetail too.
   function renderOneShots() {
-    const list = window.RW_ONESHOTS || [];
+    const list = (window.RW_ONESHOTS || []).filter((m) => !m.fan);
     const side = $('#os-list'); side.textContent = '';
     if (!list.some((m) => m.id === S.ui.oneshot)) S.ui.oneshot = list[0] && list[0].id;
     for (const m of list) side.append(h('li', { class: S.ui.oneshot === m.id ? 'sel' : '', onclick: () => { S.ui.oneshot = m.id; save(); renderOneShots(); } }, m.title, h('small', {}, m.code + ', ' + m.date)));
     const box = $('#os-root'); box.textContent = '';
     const m = list.find((x) => x.id === S.ui.oneshot);
-    if (!m) return;
+    if (m) missionDetail(m, box);
+  }
+
+  // The full Mission page: header, briefing, map and both premade teams with print buttons. extra: nodes added to the header buttons.
+  function missionDetail(m, box, extra) {
     const X = oneShotText(m);
     const progress = h('div', { class: 'progress', hidden: true }, h('div'));
     const teams = m.teams.map((t) => oneShotTeam(m, t));
     const results = teams.map((t) => computeTeam(t));
-    box.append(h('div', { class: 'os-head' }, h('div', {}, h('h2', {}, m.code + ' · One Shot Mission'), h('h3', { class: 'os-title' }, m.title), X ? h('p', { class: 'os-tag' }, X.tagline) : null),
-      h('div', { class: 'stack inline' }, m.url ? h('a', { class: 'button', href: m.url, target: '_blank', rel: 'noopener' }, 'Official page') : null, h('button', { class: 'primary', onclick: () => {
+    box.append(h('div', { class: 'os-head' }, h('div', {}, h('h2', {}, m.code + (m.fan ? ' · Fan Mission' : ' · One Shot Mission')), h('h3', { class: 'os-title' }, m.title), X ? h('p', { class: 'os-tag' }, X.tagline) : null),
+      h('div', { class: 'stack inline' }, extra || null, m.url ? h('a', { class: 'button', href: m.url, target: '_blank', rel: 'noopener' }, 'Official page') : null, h('button', { class: 'primary', onclick: () => {
         const items = []; results.forEach((res) => teamCardItems(res).forEach((it) => items.push(it)));
         printItems(items, m.id + '-all-cards', progress);
       } }, 'Print all cards for both teams'))), progress);
@@ -656,7 +668,7 @@
           } }, 'Open in Mission team')),
         tprog));
     });
-    box.append(m.fan ? h('p', { class: 'hint os-credit' }, `${m.title} is a fan-made One Shot Mission for Code Three, written for this site. It is not an official Tabletop Skirmish Games product and has not been play-tested.`)
+    box.append(m.fan ? h('p', { class: 'hint os-credit' }, `${m.title} is a fan-made Mission${m.expansion ? ' for ' + m.expansion : ''}, written for this site. It is not an official Tabletop Skirmish Games product and has not been play-tested.`)
       : h('p', { class: 'hint os-credit' }, `${m.title} is a free One Shot Mission by Lee Fox-Smith and Nicholas Fox-Smith, Tabletop Skirmish Games, ${m.date}. Official page: `, h('a', { href: m.url, target: '_blank', rel: 'noopener' }, m.url.replace('https://', '')), '.'));
   }
 
@@ -919,7 +931,7 @@
   }
 
   // Shared with js/builder.js (Mission builder and House rules pages).
-  window.RWApp = { h, sv, opt, uid, toast, missionMap, computeTeam, showView, save: () => save(), get S() { return S; } };
+  window.RWApp = { h, sv, opt, uid, toast, missionMap, missionDetail, computeTeam, showView, save: () => save(), get S() { return S; } };
 
   // ---------- start ----------
   async function start() {
@@ -938,6 +950,8 @@
     document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') window.RWStore.put('state', S); });
     window.RWRender.setOperatorColour(S.opColour);
     showView(S.ui.view || 'deck');
+    window.RWApp.started = true;
+    (window.RW_AFTER_START || []).forEach((f) => f());
   }
   start();
 })();
