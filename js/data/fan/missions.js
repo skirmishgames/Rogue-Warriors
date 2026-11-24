@@ -352,6 +352,144 @@
 
   window.RW_ONESHOTS = window.RW_ONESHOTS.concat([fallenKite, highGround, greenHell, lastBridge]);
 
+  // ---------------------------------------------------------------------------------------------
+  const longGrass = {
+    id: 'fm-long-grass', code: 'RWFM-6', title: 'Operation Long Grass', date: 'Fan Mission', fan: true,
+    teams: [
+      { id: 'fm6-ghost', side: 'Ghost Patrol (Green Team)', name: 'Ghost Patrol', setId: 'core', expId: 'core-reconnaissance', extraGear: 0,
+        slots: [sl('Okoro', 'tactician', 'assault-rifle', ['smoke']), sl('Vance', 'sniper', 'sniper-rifle'),
+          sl('Tully', 'comms', 'assault-rifle'), sl('Nash', 'scout', 'smg', ['med-kit'])] },
+      { id: 'fm6-hunters', side: 'Jungle Hunter Section (Red Team)', name: 'Jungle Hunter Section', setId: 'core', expId: 'core-raiders', extraGear: 0,
+        slots: [sl('Sergeant Ibarra', 'fire-support', 'lmg', ['frag']), sl('Cruz', 'cqb', 'shotgun'),
+          sl('Machado', 'hand-to-hand', 'melee', ['smoke']), sl('Pena', 'scout', 'assault-rifle')] },
+    ],
+    text: {
+      tagline: 'Six suspected sites. Three are real. Photograph them and walk out alive.',
+      briefing: [
+        'Air photos show six places in the valley where the canopy has been cut or the ground disturbed. Intelligence thinks three of them are hidden supply caches for the coming offensive. The other three are old logging clearings, hunters\' camps or nothing at all.',
+        'Ghost Patrol goes in on foot at first light, while the mist still sits in the valley. Their job is to look, not to fight: get close enough to each site to be sure, photograph what is real and bring the film home.',
+        'The enemy knows a patrol has crossed the river. A hunter section is already in the bush ahead of them, spread out and listening.',
+      ],
+      details: [['Location', 'Jungle valley, early morning mist'], ['Action', 'Reconnaissance'], ['Objectives', '6 suspected sites, 3 real'], ['Enemy', 'A jungle hunter section'], ['Rounds', '7']],
+      winning: { name: 'Exit Point', lines: [
+        'Ghost Patrol scores 1 point for each Intel token carried off the Battlefield across the bottom edge',
+        'Ghost Patrol wins with 2 or more points at the end of Round 7. Otherwise the hunters win',
+        'If every Ghost Patrol Warrior is Taken Out or has left the Battlefield, the Mission ends at once',
+      ] },
+      special: [
+        'Ghost Patrol deploys first along the bottom edge. The hunters then deploy anywhere at least 12" from it. Ghost Patrol activates the first Warrior in Round 1',
+        'Mist: in Rounds 1 and 2, no Warrior can draw LOS to anything more than 12" away',
+        'Dense bush: every bush is Tricky Terrain and gives Light Cover. LOS can not pass through more than 3" of bush',
+        'Checking a site: a Ghost Patrol Warrior in base contact with a site marker spends a Shoot action and rolls 1D6. On a 4+ the site is real: take an Intel token. On a 1 to 3 it is nothing: remove the marker. Once 3 real sites have been found, the rest are empty. If the number of unchecked sites equals the number of real sites still to find, the next one checked is real',
+        'A Warrior can carry any number of Intel tokens. If it is Taken Out, place its tokens in base contact. A Ghost Patrol Warrior can pick them up again; a hunter in base contact can spend a Shoot action to destroy one',
+        'A Ghost Patrol Warrior who reaches the bottom edge can leave the Battlefield with its tokens. It does not come back',
+      ],
+      sides: 'Player One is the Green Team (Ghost Patrol). Player Two is the Red Team (the hunters). Any two Core Teams of 4 Warriors can play it instead.',
+      map: {
+        code: 'LONG GRASS', note: 'Cover most of the table with jungle bushes and small trees, with gaps of 2" to 4" between them. Leave no lane longer than about 10". Number six markers for the sites.',
+        shapes: [
+          { k: 'zone-a', x: 0, y: 32, w: 36, h: 4 },
+          { k: 'zone-b', x: 0, y: 0, w: 36, h: 20 },
+          { k: 'terrain', x: 2, y: 9, w: 4, h: 3 }, { k: 'terrain', x: 11, y: 3, w: 3, h: 3 }, { k: 'terrain', x: 23, y: 6, w: 4, h: 3 }, { k: 'terrain', x: 33, y: 10, w: 2.5, h: 4 }, { k: 'terrain', x: 13, y: 13, w: 4, h: 3 }, { k: 'terrain', x: 21, y: 13, w: 3, h: 4 }, { k: 'terrain', x: 3, y: 21, w: 4, h: 4 }, { k: 'terrain', x: 31, y: 20, w: 4, h: 3 }, { k: 'terrain', x: 10, y: 24, w: 3, h: 3 }, { k: 'terrain', x: 24, y: 23, w: 4, h: 3 }, { k: 'terrain', x: 16, y: 27, w: 4, h: 3 }, { k: 'terrain', x: 5, y: 28, w: 3, h: 3 }, { k: 'terrain', x: 29, y: 28, w: 3, h: 3 }, { k: 'terrain', x: 1, y: 0.5, w: 4, h: 3 }, { k: 'terrain', x: 26, y: 0.5, w: 3, h: 3 }, { k: 'terrain', x: 14, y: 21, w: 3, h: 2.5 }, { k: 'terrain', x: 7, y: 9.5, w: 3, h: 2.5 }, { k: 'terrain', x: 16, y: 1, w: 3, h: 2.5 }, { k: 'terrain', x: 29, y: 9, w: 3, h: 3 }, { k: 'terrain', x: 2, y: 14, w: 3, h: 3 }, { k: 'terrain', x: 10, y: 19, w: 3, h: 2.5 }, { k: 'terrain', x: 26, y: 19, w: 3, h: 3 }, { k: 'terrain', x: 20, y: 25, w: 3, h: 3 }, { k: 'terrain', x: 6, y: 31, w: 2.5, h: 2 }, { k: 'terrain', x: 12, y: 29, w: 3, h: 2 }, { k: 'terrain', x: 23, y: 30, w: 3, h: 2 }, { k: 'terrain', x: 32, y: 24, w: 3, h: 3 }, { k: 'terrain', x: 1, y: 26, w: 2.5, h: 3 },
+          { k: 'objective', cx: 6, cy: 6, n: '1' }, { k: 'objective', cx: 18, cy: 8, n: '2' }, { k: 'objective', cx: 30, cy: 5, n: '3' },
+          { k: 'objective', cx: 8, cy: 16, n: '4' }, { k: 'objective', cx: 28, cy: 16.5, n: '5' }, { k: 'objective', cx: 19, cy: 19, n: '6' },
+        ],
+        legend: [['zone-a', 'Ghost Patrol deploys here, and leaves with the Intel across this edge'], ['zone-b', 'The hunters deploy anywhere here (12" or more from Ghost Patrol)'],
+          ['terrain', 'Jungle bushes (Tricky Terrain, Light Cover)'], ['objective', 'Suspected sites 1 to 6']],
+      },
+      teams: {},
+    },
+    meta: {
+      genre: 'Reconnaissance', setting: 'Jungle', win: 'Exit Point', inspired: '', players: '2', size: '4 v 4', rounds: '7', time: '60-90',
+      needs: 'Core Rulebook', version: '1.0',
+      premise: 'A recon patrol creeps through thick jungle to check six suspected supply caches. Three are real. A hunter section is waiting in the bush.',
+      testNotes: [
+        'How many sites did Ghost Patrol check, and how many turned out real?',
+        'The site rule (4+, with the limits on real and empty): did it feel fair and easy to track?',
+        'Mist in Rounds 1 and 2: did it help Ghost Patrol close in, or make no difference?',
+        'Dense bush (no LOS through more than 3"): did the game turn into close-range fights? Was that fun?',
+        'Hunters deploying 12" or more from Ghost Patrol: too close, or too far?',
+        'Did any Intel get destroyed? Did Ghost Patrol walk out early or push for a third site?',
+        'Result: who won, and with how many points?',
+      ],
+      changes: [], playtests: [],
+    },
+  };
+
+  // ---------------------------------------------------------------------------------------------
+  const stillWater = {
+    id: 'fm-still-water', code: 'RWFM-7', title: 'Operation Still Water', date: 'Fan Mission', fan: true,
+    teams: [
+      { id: 'fm7-wolf', side: 'Wolf Pack (Green Team)', name: 'Wolf Pack', setId: 'core', expId: 'core-hostage-rescue', extraGear: 0,
+        slots: [sl('Lindqvist', 'tactician', 'assault-rifle', ['smoke']), sl('Hart', 'medic', 'assault-rifle'),
+          sl('Brody', 'cqb', 'smg'), sl('Novak', 'fire-support', 'lmg', ['frag'])] },
+      { id: 'fm7-kestrel', side: 'Kestrel Patrol (Red Team)', name: 'Kestrel Patrol', setId: 'core', expId: 'core-covert-ops', extraGear: 0,
+        slots: [sl('Volkov', 'sniper', 'sniper-rifle'), sl('Sasha', 'scout', 'smg'),
+          sl('Dmitri', 'eod', 'shotgun', ['smoke']), sl('Ilya', 'demolitions', 'assault-rifle', ['frag'])] },
+    ],
+    text: {
+      tagline: 'A drone went down in the pond. Two patrols arrive at the same time.',
+      briefing: [
+        'A reconnaissance drone lost its link over the border forest last night and came down in a pond beside an old forestry cabin. Its flight recorder holds three weeks of photos and every route it flew. Both sides want it.',
+        'Two patrols reached the clearing within minutes of each other: one from the west road, one from the east ridge. Neither expected company.',
+        'The clearing has more than the drone. The cabin has a working radio, the jetty is the only dry way onto the water, and the old relay mast on the south side still reaches headquarters. Hold the ground, grab the recorder, or both.',
+      ],
+      details: [['Location', 'Forest clearing with a pond'], ['Action', 'Meeting engagement'], ['Objectives', 'Cabin, jetty, relay mast and the flight recorder'], ['Enemy', 'A rival patrol'], ['Rounds', '6']],
+      winning: { name: 'Objective Control', lines: [
+        'At the end of Rounds 2 to 6, each Team scores 1 point for each objective it controls: the cabin, the jetty and the relay mast',
+        'A Team also scores 1 point at the end of each Round while one of its Warriors carries the flight recorder, and 2 points at once if that Warrior leaves the Battlefield across its own deployment edge with it',
+        'The Team with more points at the end of Round 6 wins. A tie is a draw',
+      ] },
+      special: [
+        'Roll off: the winner chooses a deployment edge and sets up the first Warrior. Teams alternate setting up, as normal',
+        'Objective Control: a Warrior controls an objective while in base contact with it and not in base contact with an enemy Warrior (Core rules). If both Teams have the same number of Warriors on it, nobody scores',
+        'The pond is deep water (Core Swim rules). The drone sits on a sandbar in the middle: the sandbar is Tricky Terrain, not water. The jetty is a normal surface',
+        'The flight recorder: a Warrior in base contact with the drone Picks Up the recorder as the free Universal Action. Its carrier can not Run. If the carrier is Taken Out, place the recorder in base contact; anyone can pick it up',
+        'The forest: woods are Tricky Terrain and give Light Cover. LOS can not pass through more than 3" of woods',
+        'A carrier who leaves the Battlefield does not come back',
+      ],
+      sides: 'Player One is the Green Team (Wolf Pack). Player Two is the Red Team (Kestrel Patrol). Any two Core Teams of 4 Warriors can play it instead.',
+      map: {
+        code: 'STILL WATER', note: 'Use a pond piece or a blue cloth about 12" by 9", with something on it for the drone. Any shed or cabin works. The mast can be a tower, a pole or a marker. Fill the edges with woods, and add fallen logs for cover.',
+        shapes: [
+          { k: 'zone-a', x: 0, y: 0, w: 5, h: 36 },
+          { k: 'zone-b', x: 31, y: 0, w: 5, h: 36 },
+          { k: 'water', x: 12, y: 13, w: 12, h: 9 },
+          { k: 'terrain', x: 15.5, y: 15.5, w: 5, h: 4 }, { k: 'bag', cx: 18, cy: 17.5 },
+          { k: 'building', cx: 18, cy: 5, w: 7, h: 5, rot: 0 }, { k: 'objective', cx: 18, cy: 5, n: '1' },
+          { k: 'wall', x: 17.5, y: 22, w: 1, h: 4 }, { k: 'objective', cx: 18, cy: 27, n: '2' },
+          { k: 'objective', cx: 18, cy: 32.5, n: '3' },
+          { k: 'terrain', x: 6, y: 2, w: 5, h: 6 }, { k: 'terrain', x: 25, y: 2, w: 5, h: 6 },
+          { k: 'terrain', x: 6, y: 12, w: 4, h: 6 }, { k: 'terrain', x: 26, y: 12, w: 4, h: 6 },
+          { k: 'terrain', x: 6, y: 24, w: 5, h: 6 }, { k: 'terrain', x: 25, y: 24, w: 5, h: 6 },
+          { k: 'terrain', x: 12, y: 29, w: 3, h: 4 }, { k: 'terrain', x: 21, y: 29, w: 3, h: 4 }, { k: 'terrain', x: 12, y: 1, w: 3, h: 2.5 }, { k: 'terrain', x: 21, y: 1, w: 3, h: 2.5 }, { k: 'terrain', x: 6, y: 32, w: 4, h: 3 }, { k: 'terrain', x: 26, y: 32, w: 4, h: 3 }, { k: 'terrain', x: 6.5, y: 19, w: 3, h: 3 }, { k: 'terrain', x: 26.5, y: 19, w: 3, h: 3 },
+          { k: 'wall', x: 12, y: 9, w: 4, h: 1 }, { k: 'wall', x: 20, y: 9, w: 4, h: 1 }, { k: 'wall', x: 10, y: 21, w: 1, h: 4 }, { k: 'wall', x: 25, y: 21, w: 1, h: 4 },
+        ],
+        legend: [['zone-a', 'Wolf Pack deploys here (if it wins the roll-off, it can pick either edge)'], ['zone-b', 'Kestrel Patrol deploys here'],
+          ['water', 'The pond (deep water)'], ['terrain', 'Woods and the sandbar (Tricky Terrain)'], ['bag', 'The drone and its flight recorder'],
+          ['building', 'Forestry cabin'], ['objective', 'Objectives: 1 cabin, 2 end of the jetty, 3 relay mast'], ['wall', 'The jetty and fallen logs']],
+      },
+      teams: {},
+    },
+    meta: {
+      genre: 'Meeting engagement', setting: 'Forest', win: 'Objective Control', inspired: '', players: '2', size: '4 v 4', rounds: '6', time: '60-90',
+      needs: 'Core Rulebook', version: '1.0',
+      premise: 'Two patrols stumble into the same forest clearing, where a crashed drone lies in a pond. Hold the cabin, the jetty and the mast, and grab the flight recorder if you dare.',
+      testNotes: [
+        'Points by Round: which objectives changed hands?',
+        'The flight recorder: did anyone go for it? Did the carrier score each Round or run for the edge?',
+        'The pond and sandbar: was the swim to the drone worth it, or a trap?',
+        'Objectives all sit on the centre line: did that make the middle too crowded?',
+        'Woods (no LOS through more than 3"): did they give both sides enough cover to approach?',
+        'Hostage Rescue against Covert Ops: did either team have an edge?',
+        'Result: who won, and by how many points?',
+      ],
+      changes: [], playtests: [],
+    },
+  };
+
+  window.RW_ONESHOTS = window.RW_ONESHOTS.concat([longGrass, stillWater]);
+
   // Index details for the Code Three Missions.
   const meta = {
     'c3-os1': { genre: 'Heist', setting: 'Urban', win: 'Point Accumulation', inspired: '', players: '2', size: '4 v 4', rounds: '8', time: '60-90', needs: 'Code Three (fan expansion)', version: '1.0',
