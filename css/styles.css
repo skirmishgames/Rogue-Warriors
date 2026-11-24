@@ -418,3 +418,5 @@ table.platoon td:last-child button { padding: 5px 9px; }
   .tabs { order: 3; flex-basis: 100%; }
   .theme { margin-left: auto; }
 }
+.os-k-water { fill: var(--m-blue); fill-opacity: .28; }
+.os-sw.os-k-water { background: color-mix(in srgb, var(--m-blue) 28%, transparent); }

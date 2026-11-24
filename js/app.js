@@ -563,6 +563,7 @@
           sv('rect', { x: R(x0 + bw * .14), y: R(y0 + bh * .2), width: R(bw * .72), height: R(bh * .16), rx: .3, class: 'os-glass' }),
           sv('rect', { x: R(x0 + bw * .14), y: R(y0 + bh * .7), width: R(bw * .72), height: R(bh * .1), rx: .3, class: 'os-glass' })));
       }
+      else if (k === 'water') g.append(sv('rect', { x: sh.x, y: sh.y, width: sh.w, height: sh.h, class: 'os-k-water' }));
       else if (k === 'wall') g.append(sv('rect', { x: sh.x, y: sh.y, width: sh.w, height: sh.h, rx: .15, class: 'os-k-wall', filter: `url(#${id}-s)` }));
       else g.append(sv('rect', { x: sh.x, y: sh.y, width: sh.w, height: sh.h, class: 'os-k-' + k }));
       }

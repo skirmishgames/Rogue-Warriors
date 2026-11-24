@@ -86,6 +86,7 @@
     wall: { name: 'Wall or barricade', legend: 'Wall or barricade', rect: 1, def: { x: 14, y: 17.5, w: 8, h: 1 } },
     terrain: { name: 'Tricky Terrain', legend: 'Tricky Terrain', rect: 1, def: { x: 4, y: 14, w: 7, h: 7 } },
     vehicle: { name: 'Vehicle', legend: 'Vehicle', centre: 1, size: 1, rot: 1, def: { cx: 18, cy: 18, w: 3.5, h: 7, rot: 0 } },
+    water: { name: 'Water (river or lake)', legend: 'Deep water', rect: 1, def: { x: 0, y: 15, w: 36, h: 6 } },
     door: { name: 'Door', legend: 'Door', rect: 1, def: { x: 16.75, y: 11.5, w: 2.5, h: 1 } },
     objective: { name: 'Objective marker', legend: 'Objective', centre: 1, n: 1, def: { cx: 18, cy: 18, n: '1' } },
     bag: { name: 'Loot or intel', legend: 'Loot or intel', centre: 1, def: { cx: 18, cy: 18 } },
@@ -93,7 +94,7 @@
     hostage: { name: 'Hostage or HVT', legend: 'Hostage or HVT', centre: 1, def: { cx: 18, cy: 18 } },
     battery: { name: 'Gun battery', legend: 'Gun battery', rect: 1, def: { x: 15, y: 16, w: 6, h: 3 } },
   };
-  const ADDABLE = ['zone-a', 'zone-b', 'exit-a', 'exit-b', 'building', 'outline', 'vehicle', 'wall', 'terrain', 'door', 'objective', 'bag', 'safe', 'hostage'];
+  const ADDABLE = ['zone-a', 'zone-b', 'exit-a', 'exit-b', 'building', 'outline', 'vehicle', 'wall', 'terrain', 'water', 'door', 'objective', 'bag', 'safe', 'hostage'];
   // Deployment presets written for this site. Each replaces the deployment zones and keeps everything else.
   const PRESETS = {
     edges: { name: 'Opposite edges', zones: [{ k: 'zone-a', x: 0, y: 30, w: 36, h: 6 }, { k: 'zone-b', x: 0, y: 0, w: 36, h: 6 }] },
