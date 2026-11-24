@@ -35,10 +35,6 @@
     .pp .mb-team { margin-top: 6mm; }
     .pp .os-team { margin-top: 4mm; padding-top: 0; } .pp .os-team .hint, .pp .progress { display: none; } .pp .os-table td { padding: 3px 6px; } .pp .os-table th { padding: 3px 6px; }
     .pp .os-head h2 { margin-top: 0; } .pp .os-credit { margin-top: 3mm; font-size: 8.5pt; }
-    .tokens { display: flex; flex-wrap: wrap; gap: 4mm; margin-top: 4mm; }
-    .token { width: 25mm; height: 25mm; border-radius: 50%; border: 1.2mm solid #111; display: grid; place-items: center; text-align: center;
-      font: 600 8.5pt Oswald, sans-serif; letter-spacing: .04em; text-transform: uppercase; }
-    .token.ow { border-color: #2b7fd4; color: #1b5da1; } .token.pr { border-color: #2a3123; }
   `;
   function printPage(title, nodes) {
     const w = window.open('', '_blank');
@@ -63,12 +59,10 @@
     const body = $('#house-body').cloneNode(true);
     body.querySelectorAll('.no-print').forEach((x) => x.remove());
     const cols = h('div', { class: 'hr-cols' }); [...body.querySelectorAll('.hr-sec')].forEach((x) => cols.append(x));
-    const tokens = (cls, label, n) => Array.from({ length: n }, () => h('div', { class: 'token ' + cls }, label));
     printPage('Rogue Warriors House Rules', [
       h('h2', {}, 'Rogue Warriors · House Rules (optional)'),
       body.querySelector('.hr-intro') || h('p'),
-      cols,
-      h('div', { class: 'avoid' }, h('h2', {}, 'Tokens: cut out, or use any marker'), h('div', { class: 'tokens' }, tokens('pr', 'Prone', 6), tokens('ow', 'Overwatch', 6))),
+      cols
     ]);
   }
 
