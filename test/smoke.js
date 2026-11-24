@@ -180,7 +180,7 @@ srv.listen(0, async () => {
     if (extra.desktop) await extra.desktop(p, out);
     // House rules page and Mission builder
     await p.click('.tabs button[data-view="house"]');
-    const hr = await p.evaluate(() => ({ heads: document.querySelectorAll('#house-body > h3').length, about: /Go Prone/.test(document.getElementById('about-body').textContent) }));
+    const hr = await p.evaluate(() => ({ heads: document.querySelectorAll('#house-body .hr-sec h3').length, about: /Go Prone/.test(document.getElementById('about-body').textContent) }));
     if (hr.heads !== 5 || hr.about) throw new Error('House rules page wrong: ' + JSON.stringify(hr));
     await p.click('.tabs button[data-view="builder"]');
     await p.click('#mb-new');

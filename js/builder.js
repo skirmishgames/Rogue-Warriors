@@ -20,8 +20,12 @@
     .pb { break-before: page; }
     .avoid { break-inside: avoid; }
     .hr-cols { columns: 2; column-gap: 9mm; }
-    .hr-cols h3 { break-after: avoid; }
-    .hr-cols li { break-inside: avoid; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .hr-cols .hr-sec { break-inside: avoid; margin: 0 0 4mm; }
+    .hr-sec header { padding: 5px 8px; gap: 8px; } .hr-sec header .hr-ic { width: 24px; height: 24px; }
+    .hr-sec h3 { font-size: 15pt; } .hr-sec header p { font-size: 8.5pt; }
+    .hr-sec ul { padding: 2px 8px 4px; } .hr-sec li { grid-template-columns: 22mm minmax(0, 1fr); gap: 6px; padding: 3px 0; font-size: 9pt; line-height: 1.3; }
+    .hr-label { font-size: 8pt; line-height: 1.5; } .hr-intro { font-size: 10pt; }
     .mb-sheet { border: none; padding: 0; }
     .os-map { max-width: 100%; }
     .pp .os-cols { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 0 8mm; }
@@ -56,11 +60,11 @@
   function printHouseRules() {
     const body = $('#house-body').cloneNode(true);
     body.querySelectorAll('.no-print').forEach((x) => x.remove());
-    const cols = h('div', { class: 'hr-cols' }); [...body.querySelectorAll('h3, ul')].forEach((x) => cols.append(x));
+    const cols = h('div', { class: 'hr-cols' }); [...body.querySelectorAll('.hr-sec')].forEach((x) => cols.append(x));
     const tokens = (cls, label, n) => Array.from({ length: n }, () => h('div', { class: 'token ' + cls }, label));
     printPage('Rogue Warriors House Rules', [
       h('h2', {}, 'Rogue Warriors · House Rules (optional)'),
-      body.querySelector('p') || h('p'),
+      body.querySelector('.hr-intro') || h('p'),
       cols,
       h('div', { class: 'avoid' }, h('h2', {}, 'Tokens: cut out, or use any marker'), h('div', { class: 'tokens' }, tokens('pr', 'Prone', 6), tokens('ow', 'Overwatch', 6))),
     ]);
