@@ -4,8 +4,8 @@
   const uid = () => Math.random().toString(36).slice(2, 10);
 
   // ---------- state ----------
-  const DEFAULT = { sets: ['core'], paper: 'letter', crop: true, opColour: 'blue', copies: {}, custom: {}, teams: [], platoons: [],
-    ui: { view: 'deck', kind: 'team', sel: null, team: null, platoon: null } };
+  const DEFAULT = { sets: ['core'], paper: 'letter', crop: true, opColour: 'blue', copies: {}, custom: {}, teams: [], platoons: [], missions: [],
+    ui: { view: 'deck', kind: 'team', sel: null, team: null, platoon: null, mission: null } };
   let S = JSON.parse(JSON.stringify(DEFAULT));
   const save = () => window.RWStore.putLater('state', S);
 
@@ -20,7 +20,7 @@
       else if (k === 'checked' || k === 'selected' || k === 'disabled') el[k] = !!v;
       else el.setAttribute(k, v === true ? '' : v);
     }
-    for (const kid of kids.flat()) if (kid != null && kid !== false) el.append(kid.nodeType ? kid : document.createTextNode(String(kid)));
+    for (const kid of kids.flat(Infinity)) if (kid != null && kid !== false) el.append(kid.nodeType ? kid : document.createTextNode(String(kid)));
     return el;
   }
   const opt = (value, label, sel) => h('option', { value, selected: sel }, label);
@@ -514,8 +514,9 @@
     svg.append(sv('rect', { x: 0, y: 0, width: 36, height: 36, rx: 1.6, class: 'os-board' }));
     const g = sv('g', { 'clip-path': `url(#${id}-c)` });
     for (let v = 6; v < 36; v += 6) { const major = v % 12 === 0; g.append(sv('line', { x1: v, y1: 0, x2: v, y2: 36, class: major ? 'os-major' : 'os-grid' }), sv('line', { x1: 0, y1: v, x2: 36, y2: v, class: major ? 'os-major' : 'os-grid' })); }
-    for (const sh of map.shapes) {
-      const k = sh.k;
+    map.shapes.forEach((sh, i) => {
+      const k = sh.k, outer = g, g2 = sv('g', { 'data-i': i, class: 'os-shape' });
+      { const g = g2;
       if (k === 'zone-a' || k === 'zone-b') {
         const z = k.slice(-1), at = { x: sh.x, y: sh.y, width: sh.w, height: sh.h, rx: .6 };
         g.append(sv('rect', Object.assign({ class: 'os-z os-z-' + z }, at)), sv('rect', Object.assign({ fill: `url(#${id}-h${z})` }, at)), sv('rect', Object.assign({ class: 'os-zl os-zl-' + z }, at)));
@@ -551,8 +552,15 @@
         const { cx, cy } = sh;
         g.append(sv('circle', { cx, cy, r: 1.6, class: 'os-k-bag', filter: `url(#${id}-s)` }),
           sv('path', { d: `M${R(cx - .7)} ${R(cy + .95)} Q${R(cx - 1.05)} ${R(cy - .1)} ${R(cx - .35)} ${R(cy - .3)} L${R(cx - .5)} ${R(cy - .95)} L${R(cx + .5)} ${R(cy - .95)} L${R(cx + .35)} ${R(cy - .3)} Q${R(cx + 1.05)} ${R(cy - .1)} ${R(cx + .7)} ${R(cy + .95)} Z`, class: 'os-sack' }));
-      } else g.append(sv('rect', { x: sh.x, y: sh.y, width: sh.w, height: sh.h, class: 'os-k-' + k }));
-    }
+      }
+      else if (k === 'objective') {
+        g.append(sv('circle', { cx: sh.cx, cy: sh.cy, r: 1.35, class: 'os-k-objective', filter: `url(#${id}-s)` }), sv('text', { x: sh.cx, y: R(sh.cy + .55), 'text-anchor': 'middle', class: 'os-obj-n' }, String(sh.n == null ? '' : sh.n).slice(0, 2)));
+      } else if (k === 'terrain') g.append(sv('rect', { x: sh.x, y: sh.y, width: sh.w, height: sh.h, rx: Math.min(1.6, sh.w / 3, sh.h / 3), class: 'os-k-terrain' }));
+      else if (k === 'wall') g.append(sv('rect', { x: sh.x, y: sh.y, width: sh.w, height: sh.h, rx: .15, class: 'os-k-wall', filter: `url(#${id}-s)` }));
+      else g.append(sv('rect', { x: sh.x, y: sh.y, width: sh.w, height: sh.h, class: 'os-k-' + k }));
+      }
+      outer.append(g2);
+    });
     svg.append(g, sv('rect', { x: 0, y: 0, width: 36, height: 36, rx: 1.6, class: 'os-frame' }));
     for (const v of [0, 12, 24, 36]) svg.append(sv('text', { x: v, y: -1.5, 'text-anchor': 'middle', class: 'os-tick' }, v + '"'), sv('text', { x: -1.5, y: v + .5, 'text-anchor': 'end', class: 'os-tick' }, v + '"'));
     svg.append(sv('line', { x1: 0, y1: 39.2, x2: 12, y2: 39.2, class: 'os-scale' }), sv('line', { x1: 0, y1: 38.5, x2: 0, y2: 39.9, class: 'os-scale' }), sv('line', { x1: 12, y1: 38.5, x2: 12, y2: 39.9, class: 'os-scale' }),
@@ -909,6 +917,9 @@
       e.target.value = '';
     });
   }
+
+  // Shared with js/builder.js (Mission builder and House rules pages).
+  window.RWApp = { h, sv, opt, uid, toast, missionMap, computeTeam, showView, save: () => save(), get S() { return S; } };
 
   // ---------- start ----------
   async function start() {

@@ -178,6 +178,18 @@ srv.listen(0, async () => {
     if (riW < 60) throw new Error('weather entries missing from index: ' + riW);
     await p.selectOption('#ri-book', 'all');
     if (extra.desktop) await extra.desktop(p, out);
+    // House rules page and Mission builder
+    await p.click('.tabs button[data-view="house"]');
+    const hr = await p.evaluate(() => ({ heads: document.querySelectorAll('#house-body > h3').length, about: /Go Prone/.test(document.getElementById('about-body').textContent) }));
+    if (hr.heads !== 5 || hr.about) throw new Error('House rules page wrong: ' + JSON.stringify(hr));
+    await p.click('.tabs button[data-view="builder"]');
+    await p.click('#mb-new');
+    await p.fill('#mb-root .mb-form input >> nth=0', 'TEST 1-01');
+    await p.selectOption('#mb-add', 'objective');
+    await p.click('#mb-root button:has-text("Add to map")');
+    const mb = await p.evaluate(() => ({ n: RWApp.S.missions.length, shapes: RWApp.S.missions[0].map.shapes.length, map: !!document.querySelector('#mb-preview svg.os-edit'), code: RWApp.S.missions[0].code, junk: /\[object /.test(document.getElementById('mb-root').textContent) }));
+    if (mb.junk || mb.n !== 1 || mb.shapes !== 3 || !mb.map || mb.code !== 'TEST 1-01') throw new Error('Mission builder wrong: ' + JSON.stringify(mb));
+    await p.screenshot({ path: path.join(out, 'app-builder.png') });
     // backup
     await p.click('.tabs button[data-view="backup"]');
     await save(() => p.click('#export'), 'backup.json');
@@ -187,14 +199,19 @@ srv.listen(0, async () => {
     const keptTeam = await p.evaluate(() => document.querySelectorAll('#team-saved li:not(.empty)').length);
     await p.click('.tabs button[data-view="campaign"]');
     const keptPlatoon = await p.evaluate(() => document.querySelectorAll('#platoon-saved li:not(.empty)').length);
-    const kept = keptTeam === 2 && keptPlatoon === 1; // the Code Three check adds a second team
+    const keptMission = await p.evaluate(() => RWApp.S.missions.length);
+    const kept = keptTeam === 2 && keptPlatoon === 1 && keptMission === 1; // the Code Three check adds a second team
     // phone width
     await p.setViewportSize({ width: 390, height: 844 });
     if (extra.phone) await extra.phone(p, out);
+    await p.click('.tabs button[data-view="builder"]');
+    await p.waitForTimeout(300);
+    const mbOverflow = await p.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    await p.screenshot({ path: path.join(out, 'app-phone-builder.png') });
     await p.click('.tabs button[data-view="deck"]');
     await p.waitForTimeout(300);
     await p.screenshot({ path: path.join(out, 'app-phone.png') });
-    const overflow = await p.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    const overflow = mbOverflow || await p.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     console.log(JSON.stringify({ errors, stateKeptAfterReload: kept, phoneOverflow: overflow }, null, 1));
   } catch (e) {
     console.log('FAILED:', e.message, errors);
