@@ -229,6 +229,7 @@ table.platoon td:last-child button { padding: 5px 9px; }
 .about-nav a:hover { background: var(--panel2); }
 .about-nav a[aria-current="true"] { background: var(--panel2); border-left-color: var(--accent); font-weight: 700; }
 #about-body h2 { scroll-margin-top: 84px; }
+#about-body h3 { font: 600 13px/1.2 Oswald, sans-serif; letter-spacing: .06em; text-transform: uppercase; margin: 14px 0 4px; }
 .os-pub { margin: 10px 0 4px; font-weight: 700; }
 @media (max-width: 860px) {
   #view-about { grid-template-columns: minmax(0, 1fr); }

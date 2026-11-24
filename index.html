@@ -6,8 +6,8 @@
 <title>Rogue Warriors Quartermaster</title>
 <meta name="description" content="Design and print modular cards for Rogue Warriors: team, operator, weapon and gear cards for one-off Missions, plus campaign Warrior cards.">
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
-<link rel="stylesheet" href="css/fonts.css?v=202611050431">
-<link rel="stylesheet" href="css/styles.css?v=202611050431">
+<link rel="stylesheet" href="css/fonts.css?v=202611241711">
+<link rel="stylesheet" href="css/styles.css?v=202611241711">
 <script>try { const t = localStorage.getItem('rw-theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
 </head>
 <body>
@@ -151,6 +151,42 @@
         <li><strong>Mission props.</strong> Several cards mention Loot tokens, locks, safes, vaults and doors. Agree before the game which terrain pieces count.</li>
       </ul>
       <p>None of this has been play-tested. If a card feels too strong or too weak at the table, send feedback with the card name and what happened.</p>
+      <h2>House rules (optional)</h2>
+      <p>The core rules have no way to go prone, no Overwatch and no rules for windows or doors. Pin also barely slows a Warrior's shooting, and once two Warriors are in base contact neither can leave. These house rules fill those gaps. They are not official and have not been play-tested. Agree before the game which ones you use.</p>
+      <h3>Prone and crawl</h3>
+      <ul>
+        <li><strong>Go Prone.</strong> At any point during a Move, a Warrior can drop prone for free. Lay the model down or mark it with a Prone token.</li>
+        <li><strong>Take Cover.</strong> When a Warrior Takes Cover, it can go prone instead of moving 1".</li>
+        <li><strong>Crawl.</strong> A prone Warrior moves at half its MA (round up) and can't Run.</li>
+        <li><strong>Hard to hit.</strong> When a prone Warrior is shot at from more than 6" away, its cover improves one step: no cover becomes Light, Light becomes Heavy.</li>
+        <li><strong>Low profile.</strong> LOS can't be drawn to or from a prone Warrior across terrain more than 1" high that is within 3" of it. Lying behind a wall keeps you safe, but you can't see over it either. Flank it or throw a grenade.</li>
+        <li><strong>Caught down.</strong> A prone Warrior attacked in melee rolls 1 fewer MDP dice.</li>
+        <li><strong>Stand Up.</strong> Costs 3" as normal. A Pinned Warrior can't move, so it stays prone until its Pin is removed.</li>
+      </ul>
+      <h3>Overwatch</h3>
+      <ul>
+        <li><strong>Package 6: Overwatch.</strong> The Warrior does not move. Place an Overwatch token next to it. A Pinned Warrior can't choose Overwatch.</li>
+        <li><strong>The shot.</strong> Once, before this Warrior's next activation, it can shoot at an enemy that moves while in its LOS. Any movement counts: Move, Run, Crawl, Climb, Jump, Slide, Vault or a Take Cover move. The enemy can be in LOS when it starts moving or come into LOS partway.</li>
+        <li><strong>When to fire.</strong> The Overwatch player calls "Overwatch" at any point during that movement. Pause the moving model there and make a Shooting Attack at -1 to Hit, with no Aim or half-range bonus. Measure range and cover from where the model is paused. If the target is out of range, the shot is lost.</li>
+        <li><strong>After the shot.</strong> The enemy finishes its movement, unless it was Taken Out (place any carried items where it fell) or Pinned. A Pin from an Overwatch shot ends the enemy's movement where it was paused.</li>
+        <li><strong>Remove the token</strong> after the shot or at the start of the Warrior's next activation. A Warrior in base contact with an enemy loses its token.</li>
+        <li><strong>At the table.</strong> Move models along their path rather than placing them at the end, so the other player has a chance to call Overwatch.</li>
+      </ul>
+      <h3>Windows and doors</h3>
+      <ul>
+        <li><strong>Openings.</strong> Windows and gaps that a model's base can pass through. Agree which ones count before the game.</li>
+        <li><strong>Vault.</strong> In base contact with an opening, spend 2" of movement to pass through it. A Warrior can't Vault while Running.</li>
+        <li><strong>Firing port.</strong> A Warrior in base contact with an opening ignores the opening's frame when it draws LOS. Targets behind an opening get cover as normal.</li>
+        <li><strong>Doors.</strong> Open or close a door as a free Universal Action in base contact. A closed door blocks LOS and movement. A locked door needs a Breach, for example a Breacher, a Battering Ram or explosives.</li>
+      </ul>
+      <h3>Pinned</h3>
+      <ul>
+        <li>A Pinned Warrior can't move, can't choose Aim &amp; Shoot and can't choose Overwatch during its next activation.</li>
+      </ul>
+      <h3>Breaking off from melee</h3>
+      <ul>
+        <li><strong>Break Off.</strong> Instead of a Melee Attack, a Warrior in base contact can roll 1D6. On a 4+ (5+ if two or more enemy Warriors are in base contact with it), it moves up to half its MA away. On a fail, the enemy makes a free Melee Attack and the Warrior can't fight back this round.</li>
+      </ul>
       <h2>FAQ and errata</h2>
       <div id="faq-root"></div>
       <h2>Weather cards</h2>
@@ -186,19 +222,19 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script>window.RW_V = '202611050431';</script>
-<script src="js/vendor/jspdf.umd.min.js?v=202611050431"></script>
-<script src="js/data/rules.js?v=202611050431"></script>
-<script src="js/data/weather.js?v=202611050431"></script>
-<script src="js/data/fan/code-three.js?v=202611050431"></script>
-<script src="js/data/faq.js?v=202611050431"></script>
-<script src="js/data/oneshots.js?v=202611050431"></script>
-<script src="js/data/fan/code-three-missions.js?v=202611050431"></script>
-<script src="js/data/rules-index.js?v=202611050431"></script>
-<script src="js/catalog.js?v=202611050431"></script>
-<script src="js/render.js?v=202611050431"></script>
-<script src="js/print.js?v=202611050431"></script>
-<script src="js/store.js?v=202611050431"></script>
-<script src="js/app.js?v=202611050431"></script>
+<script>window.RW_V = '202611241711';</script>
+<script src="js/vendor/jspdf.umd.min.js?v=202611241711"></script>
+<script src="js/data/rules.js?v=202611241711"></script>
+<script src="js/data/weather.js?v=202611241711"></script>
+<script src="js/data/fan/code-three.js?v=202611241711"></script>
+<script src="js/data/faq.js?v=202611241711"></script>
+<script src="js/data/oneshots.js?v=202611241711"></script>
+<script src="js/data/fan/code-three-missions.js?v=202611241711"></script>
+<script src="js/data/rules-index.js?v=202611241711"></script>
+<script src="js/catalog.js?v=202611241711"></script>
+<script src="js/render.js?v=202611241711"></script>
+<script src="js/print.js?v=202611241711"></script>
+<script src="js/store.js?v=202611241711"></script>
+<script src="js/app.js?v=202611241711"></script>
 </body>
 </html>
