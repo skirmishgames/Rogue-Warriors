@@ -58,8 +58,8 @@
     body.querySelectorAll('.no-print').forEach((x) => x.remove());
     const cols = h('div', { class: 'hr-cols' }); [...body.querySelectorAll('h3, ul')].forEach((x) => cols.append(x));
     const tokens = (cls, label, n) => Array.from({ length: n }, () => h('div', { class: 'token ' + cls }, label));
-    printPage('Rogue Warriors house rules', [
-      h('h2', {}, 'Rogue Warriors · House rules (optional)'),
+    printPage('Rogue Warriors House Rules', [
+      h('h2', {}, 'Rogue Warriors · House Rules (optional)'),
       body.querySelector('p') || h('p'),
       cols,
       h('div', { class: 'avoid' }, h('h2', {}, 'Tokens: cut out, or use any marker'), h('div', { class: 'tokens' }, tokens('pr', 'Prone', 6), tokens('ow', 'Overwatch', 6))),
